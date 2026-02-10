@@ -321,7 +321,7 @@ Exemple: https://docs.google.com/spreadsheets/d/ABC123XYZ/edit#gid=0 → l'ID es
 // Fonction pour envoyer les données à Google Sheets
 async function sendToGoogleSheets(formData) {
     // REMPLACEZ CETTE URL PAR L'URL DE VOTRE APPLICATION WEB APPS SCRIPT
-    const scriptURL = 'https://docs.google.com/spreadsheets/d/1uEBLf5Bd4RFSjEcdQ2KeeRMntBgXoEs5JKZdP5BXhgI/edit?usp=sharing';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxhtIC9yJg_ymu50X8hUvPknAVYSQsunbwdYXbmTjc5mVUs3M-_QqMM1nr7uYlSBFx7/exec';
     
     const response = await fetch(scriptURL, {
         method: 'POST',
@@ -355,3 +355,4 @@ async function sendToGoogleSheetsDemo(formData) {
 // Pour utiliser la version démo pendant le développement, remplacez l'appel à sendToGoogleSheets
 
 // par sendToGoogleSheetsDemo dans la fonction handleFormSubmit
+

@@ -1,14 +1,10 @@
-// Configuration du produit// =======================================================
-// CONFIGURATION DU PRODUIT
-// =======================================================
-const PRODUCT = {
+// Configuration du produit// =======================================================const PRODUCT = {
     name: "Montre Élégante Classique",
-    price: 15000, // Prix en DA
-    deliveryHome: 200, // Frais de livraison à domicile
-    deliveryOffice: 0 // Frais de livraison au bureau
+    price: 15000,
+    deliveryHome: 200,
+    deliveryOffice: 0
 };
 
-// Liste des wilayas
 const WILAYAS = [
     "Adrar", "Chlef", "Laghouat", "Oum El Bouaghi", "Batna",
     "Béjaïa", "Biskra", "Béchar", "Blida", "Bouira",
@@ -24,114 +20,106 @@ const WILAYAS = [
     "Djanet", "El M'Ghair", "El Menia"
 ];
 
-// =======================================================
-// VARIABLES GLOBALES
-// =======================================================
 let totalPrice = PRODUCT.price;
 let currentDeliveryCost = PRODUCT.deliveryHome;
 let orderReference = generateOrderReference();
 
-// =======================================================
-// INITIALISATION AU CHARGEMENT DE LA PAGE
-// =======================================================
-document.addEventListener('DOMContentLoaded', () => {
+// ======== Initialisation ========
+document.addEventListener('DOMContentLoaded', function() {
     initWilayasDropdown();
     initEventListeners();
     updateTotalPrice();
 });
 
-// =======================================================
-// DROPDOWN WILAYAS
-// =======================================================
 function initWilayasDropdown() {
     const wilayaSelect = document.getElementById('wilaya');
     WILAYAS.sort();
-    WILAYAS.forEach(w => {
+    WILAYAS.forEach(wilaya => {
         const option = document.createElement('option');
-        option.value = w;
-        option.textContent = w;
+        option.value = wilaya;
+        option.textContent = wilaya;
         wilayaSelect.appendChild(option);
     });
 }
 
-// =======================================================
-// LISTENERS
-// =======================================================
+// ======== Event listeners ========
 function initEventListeners() {
     const quantityInput = document.getElementById('quantity');
     const decreaseBtn = document.getElementById('decrease-qty');
     const increaseBtn = document.getElementById('increase-qty');
-    
-    quantityInput.addEventListener('input', updateTotalPrice);
+    const deliveryOptions = document.querySelectorAll('input[name="delivery"]');
+    const orderForm = document.getElementById('order-form');
+
     decreaseBtn.addEventListener('click', () => {
         let val = parseInt(quantityInput.value);
-        if (val > 1) { quantityInput.value = val - 1; updateTotalPrice(); }
+        if (val > 1) quantityInput.value = val - 1;
+        updateTotalPrice();
     });
     increaseBtn.addEventListener('click', () => {
-        let val = parseInt(quantityInput.value);
-        quantityInput.value = val + 1; updateTotalPrice();
+        quantityInput.value = parseInt(quantityInput.value) + 1;
+        updateTotalPrice();
     });
+    quantityInput.addEventListener('input', updateTotalPrice);
+    quantityInput.addEventListener('change', updateTotalPrice);
 
-    const deliveryOptions = document.querySelectorAll('input[name="delivery"]');
     deliveryOptions.forEach(opt => opt.addEventListener('change', updateTotalPrice));
 
-    const orderForm = document.getElementById('order-form');
     orderForm.addEventListener('submit', handleFormSubmit);
-
-    const closeModalBtns = document.querySelectorAll('.close-modal, .btn-close-modal');
-    const successModal = document.getElementById('success-modal');
-    closeModalBtns.forEach(btn => btn.addEventListener('click', () => { successModal.style.display = 'none'; }));
-    window.addEventListener('click', e => { if (e.target === successModal) successModal.style.display = 'none'; });
 }
 
-// =======================================================
-// CALCUL PRIX TOTAL
-// =======================================================
+// ======== Prix ========
 function updateTotalPrice() {
     const quantity = parseInt(document.getElementById('quantity').value);
-    const unitPrice = PRODUCT.price;
     const deliveryType = document.querySelector('input[name="delivery"]:checked').value;
-    currentDeliveryCost = deliveryType === "Livraison à domicile" ? PRODUCT.deliveryHome : PRODUCT.deliveryOffice;
-    totalPrice = (unitPrice * quantity) + currentDeliveryCost;
+    currentDeliveryCost = (deliveryType === "Livraison à domicile") ? PRODUCT.deliveryHome : PRODUCT.deliveryOffice;
+    totalPrice = (PRODUCT.price * quantity) + currentDeliveryCost;
+
     document.getElementById('total-price').textContent = formatPrice(totalPrice) + " DA";
-    document.getElementById('price-breakdown').textContent = `Montre: ${formatPrice(unitPrice*quantity)} DA, Livraison: ${formatPrice(currentDeliveryCost)} DA`;
+    document.getElementById('price-breakdown').textContent = `Montre: ${formatPrice(PRODUCT.price * quantity)} DA, Livraison: ${formatPrice(currentDeliveryCost)} DA`;
 }
 
 function formatPrice(price) {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
-// =======================================================
-// GENERER REFERENCE
-// =======================================================
 function generateOrderReference() {
-    const ts = Date.now().toString().slice(-6);
-    const rnd = Math.floor(Math.random()*1000).toString().padStart(3,"0");
-    return `CMD-${ts}${rnd}`;
+    const timestamp = Date.now().toString().slice(-6);
+    const randomNum = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    return `CMD-${timestamp}${randomNum}`;
 }
 
-// =======================================================
-// VALIDATION FORMULAIRE
-// =======================================================
+// ======== Validation ========
 function validateForm(data) {
     let isValid = true;
     document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
 
-    if (!data.name || data.name.trim().length<3) { document.getElementById('name-error').textContent='Nom invalide'; isValid=false; }
-    const phoneRegex = /^(05|06|07)\d{8}$/;
-    if (!data.phone || !phoneRegex.test(data.phone)) { document.getElementById('phone-error').textContent='Téléphone invalide'; isValid=false; }
-    if (!data.wilaya) { document.getElementById('wilaya-error').textContent='Sélectionnez votre wilaya'; isValid=false; }
-    if (!data.address || data.address.trim().length<10) { document.getElementById('address-error').textContent='Adresse trop courte'; isValid=false; }
-    if (!data.quantity || data.quantity<1) { document.getElementById('quantity-error').textContent='Quantité invalide'; isValid=false; }
-
+    if (!data.name || data.name.trim().length < 3) {
+        document.getElementById('name-error').textContent = 'Nom invalide';
+        isValid = false;
+    }
+    if (!data.phone || !/^(05|06|07)\d{8}$/.test(data.phone)) {
+        document.getElementById('phone-error').textContent = 'Téléphone invalide';
+        isValid = false;
+    }
+    if (!data.wilaya) {
+        document.getElementById('wilaya-error').textContent = 'Sélectionnez votre wilaya';
+        isValid = false;
+    }
+    if (!data.address || data.address.trim().length < 10) {
+        document.getElementById('address-error').textContent = 'Adresse invalide';
+        isValid = false;
+    }
+    if (!data.quantity || data.quantity < 1) {
+        document.getElementById('quantity-error').textContent = 'Quantité invalide';
+        isValid = false;
+    }
     return isValid;
 }
 
-// =======================================================
-// ENVOI FORMULAIRE
-// =======================================================
-async function handleFormSubmit(event) {
-    event.preventDefault();
+// ======== Soumission formulaire ========
+async function handleFormSubmit(e) {
+    e.preventDefault();
+
     const formData = {
         name: document.getElementById('name').value.trim(),
         phone: document.getElementById('phone').value.trim(),
@@ -141,7 +129,7 @@ async function handleFormSubmit(event) {
         quantity: parseInt(document.getElementById('quantity').value),
         totalPrice: totalPrice,
         product: PRODUCT.name,
-        orderDate: new Date().toISOString(),
+        orderDate: new Date().toLocaleString('fr-FR'),
         orderReference: orderReference
     };
 
@@ -152,9 +140,18 @@ async function handleFormSubmit(event) {
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi...';
 
     try {
-        await sendToGoogleSheets(formData);
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxhtIC9yJg_ymu50X8hUvPknAVYSQsunbwdYXbmTjc5mVUs3M-_QqMM1nr7uYlSBFx7/exec'; // ← ضع رابط Google Apps Script هنا
+        const response = await fetch(scriptURL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+        const result = await response.json();
+        if (!result.success) throw new Error(result.error || "Erreur inconnue");
+
         document.getElementById('order-ref').textContent = orderReference;
         document.getElementById('success-modal').style.display = 'flex';
+
         setTimeout(() => {
             document.getElementById('order-form').reset();
             document.getElementById('quantity').value = 1;
@@ -162,31 +159,13 @@ async function handleFormSubmit(event) {
             orderReference = generateOrderReference();
         }, 3000);
 
-    } catch (error) {
-        console.error('Erreur d\'envoi:', error);
-        alert('Une erreur est survenue lors de l\'envoi. Vérifiez la console pour détails.');
+    } catch (err) {
+        alert("Une erreur est survenue lors de l'envoi. Vérifiez la console pour détails.");
+        console.error("Erreur d'envoi:", err);
     } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> Commander maintenant';
     }
-}
-
-// =======================================================
-// FONCTION GOOGLE SHEETS
-// =======================================================
-async function sendToGoogleSheets(formData) {
-    // Remplacez par votre URL de déploiement Web App
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxhtIC9yJg_ymu50X8hUvPknAVYSQsunbwdYXbmTjc5mVUs3M-_QqMM1nr7uYlSBFx7/exec';
-
-    const response = await fetch(scriptURL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-    });
-
-    const result = await response.json();
-    if (!result.success) throw new Error(result.error || 'Erreur inconnue');
-    return result;
 }
 
 

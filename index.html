@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Montre Élégante - Achetez en ligne</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Montre Élégante Classique</h1>
+            <p class="tagline">L'élégance intemporelle au poignet</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Section Produit -->
+        <section class="product-section">
+            <div class="product-image">
+                <img src="w1.jpg" alt="Montre Élégante Classique - Cadran argenté avec bracelet en cuir noir" id="product-img">
+                <div class="price-badge">
+                    <span class="current-price">15.000 DA</span>
+                    <span class="old-price">18.000 DA</span>
+                    <span class="discount">-17%</span>
+                </div>
+            </div>
+
+            <div class="product-info">
+                <div class="price-display">
+                    <h2>Prix: <span id="unit-price">15.000</span> DA</h2>
+                    <p class="shipping-info">Livraison gratuite en Algérie</p>
+                </div>
+
+                <div class="description">
+                    <h3>Description du produit</h3>
+                    <p>Cette montre élégante allie design classique et technologie moderne. Cadran argenté avec indices romains, bracelet en cuir noir véritable, étanche jusqu'à 50 mètres. Parfaite pour les occasions spéciales et l'usage quotidien.</p>
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> Mouvement à quartz précis</li>
+                        <li><i class="fas fa-check-circle"></i> Verre minéral résistant aux rayures</li>
+                        <li><i class="fas fa-check-circle"></i> Étanche jusqu'à 50 mètres</li>
+                        <li><i class="fas fa-check-circle"></i> Garantie 2 ans</li>
+                        <li><i class="fas fa-check-circle"></i> Livraison rapide partout en Algérie</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formulaire de commande -->
+        <section class="order-form-section">
+            <h2>Formulaire de Commande</h2>
+            <p class="form-description">Remplissez ce formulaire pour commander votre montre. Nous vous contacterons pour confirmer la commande.</p>
+
+            <form id="order-form">
+                <div class="form-group">
+                    <label for="name">Nom et Prénom *</label>
+                    <input type="text" id="name" name="name" required placeholder="Ex: Ahmed Bensalem">
+                    <div class="error-message" id="name-error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Numéro de téléphone *</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="Ex: 0550123456">
+                    <div class="error-message" id="phone-error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="wilaya">Wilaya *</label>
+                    <select id="wilaya" name="wilaya" required>
+                        <option value="" disabled selected>Sélectionnez votre wilaya</option>
+                        <!-- Les 58 wilayas seront ajoutées via JavaScript -->
+                    </select>
+                    <div class="error-message" id="wilaya-error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Adresse complète *</label>
+                    <textarea id="address" name="address" rows="3" required placeholder="Numéro, rue, commune..."></textarea>
+                    <div class="error-message" id="address-error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Type de livraison *</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="home-delivery" name="delivery" value="Livraison à domicile" checked>
+                            <label for="home-delivery">Livraison à domicile (+200 DA)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="office-delivery" name="delivery" value="Livraison au bureau">
+                            <label for="office-delivery">Livraison au bureau (Gratuite)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">Quantité *</label>
+                    <div class="quantity-selector">
+                        <button type="button" class="quantity-btn" id="decrease-qty">-</button>
+                        <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+                        <button type="button" class="quantity-btn" id="increase-qty">+</button>
+                    </div>
+                    <div class="error-message" id="quantity-error"></div>
+                </div>
+
+                <div class="form-group total-price">
+                    <label>Prix total</label>
+                    <div class="total-amount">
+                        <span id="total-price">15.000</span> DA
+                    </div>
+                    <p class="price-breakdown" id="price-breakdown">Montre: 15.000 DA, Livraison: 200 DA</p>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submit-btn">
+                    <i class="fas fa-shopping-cart"></i> Commander maintenant
+                </button>
+                
+                <div class="form-notice">
+                    <p><i class="fas fa-info-circle"></i> Après soumission, notre équipe vous contactera dans les 24h pour confirmer votre commande.</p>
+                </div>
+            </form>
+        </section>
+
+        <!-- Section Garanties -->
+        <section class="guarantees">
+            <h2>Nos Garanties</h2>
+            <div class="guarantee-cards">
+                <div class="guarantee-card">
+                    <i class="fas fa-shipping-fast"></i>
+                    <h3>Livraison Rapide</h3>
+                    <p>Livraison en 2-5 jours partout en Algérie</p>
+                </div>
+                <div class="guarantee-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Garantie 2 Ans</h3>
+                    <p>Garantie constructeur de 24 mois</p>
+                </div>
+                <div class="guarantee-card">
+                    <i class="fas fa-undo-alt"></i>
+                    <h3>Retour Facile</h3>
+                    <p>Retours acceptés sous 14 jours</p>
+                </div>
+                <div class="guarantee-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>Support Client</h3>
+                    <p>Assistance 7j/7 par téléphone</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Montre Élégante</h3>
+                    <p>Votre boutique en ligne de montres de qualité en Algérie.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-phone"></i> 0560 12 34 56</p>
+                    <p><i class="fas fa-envelope"></i> contact@montre-elegante.dz</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Paiement Sécurisé</h3>
+                    <div class="payment-icons">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fas fa-money-bill-wave"></i>
+                        <i class="fas fa-university"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Montre Élégante. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de confirmation -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Commande Enregistrée !</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <p>Votre commande a été enregistrée avec succès.</p>
+                <p>Notre équipe vous contactera dans les 24 heures pour confirmer votre commande et finaliser les détails de livraison.</p>
+                <p class="order-reference">Référence: <span id="order-ref">CMD-</span></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-close-modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -165,7 +165,7 @@ async function handleFormSubmit(e) {
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi...';
 
     try {
-        const scriptURL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec'; // ← Remplace par ton URL Apps Script
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxhtIC9yJg_ymu50X8hUvPknAVYSQsunbwdYXbmTjc5mVUs3M-_QqMM1nr7uYlSBFx7/exec'; // ← Remplace par ton URL Apps Script
         const response = await fetch(scriptURL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -193,5 +193,6 @@ async function handleFormSubmit(e) {
         submitBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> Commander maintenant';
     }
 }
+
 
 

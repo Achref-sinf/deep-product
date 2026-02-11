@@ -1,27 +1,27 @@
-// Configuration du produit// =======================================================const PRODUCT = {// =======================================================
-// Configuration du produit
+// Configuration du produit// =======================================================const PRODUCT = {// =======================================================// =======================================================
+// CONFIGURATION PRODUIT
 // =======================================================
 const PRODUCT = {
     name: "Montre Élégante Classique",
-    price: 15000, // Prix en DA
-    deliveryHome: 300, // Frais de livraison à domicile
-    deliveryOffice: 0 // Livraison au bureau gratuite
+    price: 15000,       // Prix en DA
+    deliveryHome: 200,  // Frais livraison domicile
+    deliveryOffice: 0   // Frais livraison bureau
 };
 
-// Liste des 58 wilayas
+// Liste des 58 wilayas algériennes
 const WILAYAS = [
-    "Adrar","Chlef","Laghouat","Oum El Bouaghi","Batna",
-    "Béjaïa","Biskra","Béchar","Blida","Bouira",
-    "Tamanrasset","Tébessa","Tlemcen","Tiaret","Tizi Ouzou",
-    "Alger","Djelfa","Jijel","Sétif","Saïda",
-    "Skikda","Sidi Bel Abbès","Annaba","Guelma","Constantine",
-    "Médéa","Mostaganem","M'Sila","Mascara","Ouargla",
-    "Oran","El Bayadh","Illizi","Bordj Bou Arréridj","Boumerdès",
-    "El Tarf","Tindouf","Tissemsilt","El Oued","Khenchela",
-    "Souk Ahras","Tipaza","Mila","Aïn Defla","Naâma",
-    "Aïn Témouchent","Ghardaïa","Relizane","Timimoun","Bordj Badji Mokhtar",
-    "Ouled Djellal","Béni Abbès","In Salah","In Guezzam","Touggourt",
-    "Djanet","El M'Ghair","El Menia"
+    "Adrar", "Chlef", "Laghouat", "Oum El Bouaghi", "Batna",
+    "Béjaïa", "Biskra", "Béchar", "Blida", "Bouira",
+    "Tamanrasset", "Tébessa", "Tlemcen", "Tiaret", "Tizi Ouzou",
+    "Alger", "Djelfa", "Jijel", "Sétif", "Saïda",
+    "Skikda", "Sidi Bel Abbès", "Annaba", "Guelma", "Constantine",
+    "Médéa", "Mostaganem", "M'Sila", "Mascara", "Ouargla",
+    "Oran", "El Bayadh", "Illizi", "Bordj Bou Arréridj", "Boumerdès",
+    "El Tarf", "Tindouf", "Tissemsilt", "El Oued", "Khenchela",
+    "Souk Ahras", "Tipaza", "Mila", "Aïn Defla", "Naâma",
+    "Aïn Témouchent", "Ghardaïa", "Relizane", "Timimoun", "Bordj Badji Mokhtar",
+    "Ouled Djellal", "Béni Abbès", "In Salah", "In Guezzam", "Touggourt",
+    "Djanet", "El M'Ghair", "El Menia"
 ];
 
 // Variables globales
@@ -30,7 +30,7 @@ let currentDeliveryCost = PRODUCT.deliveryHome;
 let orderReference = generateOrderReference();
 
 // =======================================================
-// Initialisation après chargement du DOM
+// INITIALISATION
 // =======================================================
 document.addEventListener('DOMContentLoaded', function() {
     initWilayasDropdown();
@@ -38,9 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateTotalPrice();
 });
 
-// =======================================================
 // Remplir le dropdown des wilayas
-// =======================================================
 function initWilayasDropdown() {
     const wilayaSelect = document.getElementById('wilaya');
     WILAYAS.sort().forEach(wilaya => {
@@ -52,7 +50,7 @@ function initWilayasDropdown() {
 }
 
 // =======================================================
-// Gestion des événements
+// GESTION DES ÉVÉNEMENTS
 // =======================================================
 function initEventListeners() {
     const quantityInput = document.getElementById('quantity');
@@ -60,18 +58,18 @@ function initEventListeners() {
     const increaseBtn = document.getElementById('increase-qty');
     const deliveryOptions = document.querySelectorAll('input[name="delivery"]');
     const orderForm = document.getElementById('order-form');
-    const closeModalBtns = document.querySelectorAll('.close-modal, .btn-close-modal');
-    const successModal = document.getElementById('success-modal');
 
     decreaseBtn.addEventListener('click', () => {
         let val = parseInt(quantityInput.value);
         if (val > 1) quantityInput.value = val - 1;
         updateTotalPrice();
     });
+
     increaseBtn.addEventListener('click', () => {
         quantityInput.value = parseInt(quantityInput.value) + 1;
         updateTotalPrice();
     });
+
     quantityInput.addEventListener('input', updateTotalPrice);
     quantityInput.addEventListener('change', updateTotalPrice);
 
@@ -79,19 +77,17 @@ function initEventListeners() {
 
     orderForm.addEventListener('submit', handleFormSubmit);
 
+    // Gestion modal
+    const successModal = document.getElementById('success-modal');
+    const closeModalBtns = document.querySelectorAll('.close-modal, .btn-close-modal');
     closeModalBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            successModal.style.display = 'none';
-        });
+        btn.addEventListener('click', () => { successModal.style.display = 'none'; });
     });
-
-    window.addEventListener('click', (event) => {
-        if (event.target === successModal) successModal.style.display = 'none';
-    });
+    window.addEventListener('click', (e) => { if (e.target === successModal) successModal.style.display = 'none'; });
 }
 
 // =======================================================
-// Calcul du prix total
+// CALCUL DU PRIX
 // =======================================================
 function updateTotalPrice() {
     const quantity = parseInt(document.getElementById('quantity').value);
@@ -107,9 +103,6 @@ function formatPrice(price) {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
-// =======================================================
-// Génération de référence unique
-// =======================================================
 function generateOrderReference() {
     const timestamp = Date.now().toString().slice(-6);
     const randomNum = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
@@ -117,7 +110,7 @@ function generateOrderReference() {
 }
 
 // =======================================================
-// Validation du formulaire
+// VALIDATION DU FORMULAIRE
 // =======================================================
 function validateForm(data) {
     let isValid = true;
@@ -147,7 +140,7 @@ function validateForm(data) {
 }
 
 // =======================================================
-// Soumission du formulaire
+// ENVOI DU FORMULAIRE
 // =======================================================
 async function handleFormSubmit(e) {
     e.preventDefault();
@@ -172,7 +165,7 @@ async function handleFormSubmit(e) {
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi...';
 
     try {
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxhtIC9yJg_ymu50X8hUvPknAVYSQsunbwdYXbmTjc5M-_QqMM1nr7uYlSBFx7/exec'; // ← ton Apps Script
+        const scriptURL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec'; // ← Remplace par ton URL Apps Script
         const response = await fetch(scriptURL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
